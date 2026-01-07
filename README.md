@@ -1,22 +1,28 @@
 # Machine Learning Zoomcamp (Cohort 2025)
 
-## Midterm Project: Fraud Detection Prediction Service
+## Capstone Project 1: A Genetic Variants Conflicting Classification Predictor Service
 
 ### Description of the problem
 
-This project is based on a public domain dataset published by [Samay Ashar](https://www.kaggle.com/samayashar) on [Kaggle.com](https://www.kaggle.com/datasets/samayashar/fraud-detection-transactions-dataset). It was named the _**Fraud Detection Transactions Dataset**_ and it is described as a _high-quality synthetic dataset for fraud detection using XGBoost_.
+This project focuses on the classification of genetic variants using data from [ClinVar], a freely accessible, public archive hosted by the **National Center for Biotechnology Information (NCBI)**. This work has been inspired by previous research in the field by [Alexandra Veres].
 
-This dataset is designed to help machine learning enthusiasts develop robust fraud detection models. It contains realistic synthetic transaction data, including user information, transaction types, risk scores, and more, making it ideal for binary classification tasks with classification algorithms (including non-XGBoost models).
+#### What is ClinVar?
+
+[ClinVar]: https://www.ncbi.nlm.nih.gov/clinvar/intro
+
+According to the _NCBI_, **ClinVar** is a centralized repository that aggregates reports of the relationships among human variations and phenotypes, with supporting evidence. It facilitates access to and communication about the relationships asserted between human variation and observed health status. Interpretations of the clinical significance of variants are submitted by clinical testing laboratories, research laboratories, and expert panels worldwide.
 
 #### Key Characteristics of the Dataset:
 
-- It contains **21 features** that capture various aspects of a financial transaction.
-- It has a realistic structure, including numerical, categorical, and temporal data.
-- The target variable, `fraud_label`, is **binary** (0 = Not Fraud, 1 = Fraud).
-- It is optimized for high accuracy with models like XGBoost and other machine learning algorithms.
-- The dataset is useful for tasks such as anomaly detection, risk analysis, and security research.
+Based on the original study by Alexandra Veres, this dataset is characterized by:
 
-The primary goal of this project is to apply fundamental machine learning methodologies to create a **predictive fraud detection service**, serving educational purposes.
+- Real-world Genomic Data: Extracted from the NCBI ClinVar database.
+
+- Feature Diversity: 65 initial features covering genomic coordinates, molecular consequences, and clinical metadata.
+
+- Target Variable: A binary label (CLASS) where 1 indicates a conflict in clinical interpretation and 0 indicates consistency.
+
+- Scientific Relevance: Ideal for testing classification models in a high-stakes healthcare context where data imbalance and feature selection are critical.
 
 ### Repository contents
 
@@ -33,14 +39,15 @@ Below is an overview of the key directories and files:
 - Dockerfile: The deployment docker file.
 - run-docker.sh: A script to run "docker build" & "docker run" locally.
 - submission.ipynb: The rest of the data cleaning, data analysis and predictive modelling stuff.
-- fraud-detection-transactions-dataset.zip: A saved copy of the data set file downloaded from Kaggle.
+- clinvar_conflicting.csv.zip: A saved copy of the data set file downloaded from Kaggle.
+- prepared_clinvar_conflicting.parquet: A local copy of the cleaned and prepared data set.
 
 ### How to run this project
 
 This project was created using **Github's Codespaces**. To run any artifact create a free codespace from the repository's main page. Then from your browser: open a terminal view and change current directory to:
 
 ```
-$ cd cohorts/2025/projects/midterm
+$ cd /workspaces/machine-learning-zoomcamp-2025-projects-capstone1
 ```
 
 Now, from this directory, you can run:
@@ -58,25 +65,22 @@ Or run from any Python session (e.g. `uv run python`) the following code:
 ```python
 import requests
 
-transaction = {
-    "transaction_amount": 200,
-    "account_balance": 0,
-    "daily_transaction_count": 0,
-    "avg_transaction_amount_7d": 15,
-    "failed_transaction_count_7d": 0,
-    "card_age": 0,
-    "transaction_distance": 1000,
-    "risk_score": 0.2,
-    "authentication_method": "Password",
-    "card_type": "Visa",
-    "device_type": "Mobile",
-    "hour_of_day": 10,
-    "ip_address_flag": 0,
-    "is_weekend": 0,
-    "location": "New York",
-    "merchant_category": "Electronics",
-    "previous_fraudulent_activity": 0,
-    "transaction_type": "Online",
+variant = {
+  "chrom":  "1",
+  "pos":    1168180,
+  "ref":    "G",
+  "alt":    "C",
+  "af_esp": 0.07710,
+  "mc":     "SO:0001583|missense_variant",
+  "origin": 1,
+  "protein_position": 174.0,
+  "amino_acids":      "E/D",
+  "strand":           "1",
+  "loftool":          0.157,
+  "cadd_phred":       1.053,
+  "cadd_raw":         -0.208682,
+  "location_type":    "exon",
+  "location_value":   "1/1",
 }
 
 res = requests.post("https://machine-learning-zoomcamp-428800185377.europe-west1.run.app/predict", json=transaction)
@@ -85,4 +89,4 @@ res.raise_for_status()
 print(res.json())
 ```
 
-More information about deployment can be found at submission.ipynb.
+More information about deployment can be found at [submission.ipynb].
