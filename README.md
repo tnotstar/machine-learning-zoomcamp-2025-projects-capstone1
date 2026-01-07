@@ -6,9 +6,10 @@
 
 This project focuses on the classification of genetic variants using data from [ClinVar], a freely accessible, public archive hosted by the **National Center for Biotechnology Information (NCBI)**. This work has been inspired by previous research in the field by [Alexandra Veres].
 
-#### What is ClinVar?
-
 [ClinVar]: https://www.ncbi.nlm.nih.gov/clinvar/intro
+[Alexandra Veres]: https://www.kaggle.com/code/alexandraveres/supervised-learning-classification
+
+#### What is ClinVar?
 
 According to the _NCBI_, **ClinVar** is a centralized repository that aggregates reports of the relationships among human variations and phenotypes, with supporting evidence. It facilitates access to and communication about the relationships asserted between human variation and observed health status. Interpretations of the clinical significance of variants are submitted by clinical testing laboratories, research laboratories, and expert panels worldwide.
 
